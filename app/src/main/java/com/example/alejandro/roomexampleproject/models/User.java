@@ -15,14 +15,23 @@ public class User {
     @ColumnInfo(name = "last_name")
     private String lastName;
 
-    public User(String firstName, String lastName, String phone) {
+    @ColumnInfo(name = "phone_number")
+    private String phone;
+
+    @ColumnInfo(name = "email")
+    private String email;
+
+
+    @ColumnInfo(name = "address")
+    private String address;
+
+    public User(String firstName, String lastName, String phone,String email,String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.email = email;
+        this.address = address;
     }
-
-    @ColumnInfo(name = "phone_number")
-    private String phone;
 
     public int getId() {
         return id;
@@ -54,5 +63,21 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

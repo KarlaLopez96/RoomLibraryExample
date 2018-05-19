@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         //database
         database = AppDatabase.getInstance(getApplicationContext());
         new FillInitialDbAsync(database).execute();
-
         //setting up the toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -110,14 +109,15 @@ public class MainActivity extends AppCompatActivity {
         private final NoteDao notedao;
 
         private FillInitialDbAsync(AppDatabase db) {
-            this.userdao = db.userDao();
-            this.notedao = db.noteDao();
+            this.userdao = db.userDao();this.notedao = db.noteDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            userdao.insert(new User("Alejandro", "Velasco", "22577777"),
-                    new User("Enrique", "Palacios", "22577777"));
+            userdao.insert(new User("Alejandro", "Velasco", "22577777",
+                            "emailyahoo@hotmail","Col.JuanitoSanchez,pje.'A',pol.A-5"),
+                   new User("Enrique", "Palacios", "22577777","emailhotmail@yahoo",
+                            "Col.Jardines de la Hacienda,pje'C',pol.D-55"));
             return null;
         }
     }
