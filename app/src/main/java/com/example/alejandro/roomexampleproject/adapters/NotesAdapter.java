@@ -46,22 +46,24 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder holder, final int position) {
         holder.notes.setText(NotesList.get(position).getData());
-        holder.notes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                android.support.v4.app.FragmentManager fragmentManager;
-                android.support.v4.app.FragmentTransaction fragmentTransaction;
+        if(flag){
+            holder.notes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    android.support.v4.app.FragmentManager fragmentManager;
+                    android.support.v4.app.FragmentTransaction fragmentTransaction;
 
-                fragmentManager = ((MainActivity)v.getContext()).getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentManager = ((MainActivity)v.getContext()).getSupportFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
 
-                InfoNote fragment = new InfoNote();
-                fragment.setUserNotes(NotesList.get(position));
+                    InfoNote fragment = new InfoNote();
+                    fragment.setUserNotes(NotesList.get(position));
 
-                fragmentTransaction.replace(R.id.contentFrame2, fragment);
-                fragmentTransaction.commit();
-            }
-        });
+                    fragmentTransaction.replace(R.id.contentFrame2, fragment);
+                    fragmentTransaction.commit();
+                }
+            });
+        }
     }
 
     @Override

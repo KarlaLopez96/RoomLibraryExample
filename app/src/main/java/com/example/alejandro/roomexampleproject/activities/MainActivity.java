@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextClock;
+import android.widget.TextView;
 
 import com.example.alejandro.roomexampleproject.R;
 import com.example.alejandro.roomexampleproject.database.AppDatabase;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBar actionBar;
     AppDatabase database;
+    NavigationView navigationView;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         //setting up drawerlayout
         drawerLayout = findViewById(R.id.drawerLayout);
 
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -104,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        new GetUName(database).execute();
     }
 
     private class GetExtra extends AsyncTask<Void, ArrayList<Note>, ArrayList<Note>>{
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
         }
     }
-    //ejecutamos para el usuario de la pos 0
+
     private class GetUsersAsync extends AsyncTask<Void, User, User>{
         private final UserDao userdao;
 
@@ -154,6 +159,33 @@ public class MainActivity extends AppCompatActivity {
 
             fragmentTransaction.replace(R.id.contentFrame, fragment);
             fragmentTransaction.commit();
+        }
+    }
+
+    //ejecutamos para el usuario de la pos 0
+    private class GetUName extends AsyncTask<Void, User, User>{
+        private final UserDao userdao;
+
+        private GetUName(AppDatabase db) {
+            this.userdao = db.userDao();
+        }
+
+        @Override
+        protected User doInBackground(Void... voids) {
+
+            ((TextView)navigationView.getHeaderView(0).findViewById(R.id.firstName_nav)).setText(
+                    userdao.getAll().get(0).getFirstName()
+            );
+            ((TextView)navigationView.getHeaderView(0).findViewById(R.id.lastName_nav)).setText(
+                    userdao.getAll().get(0).getLastName()
+            );
+
+            return userdao.getAll().get(0);
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            super.onPostExecute(user);
         }
     }
 
@@ -191,6 +223,8 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
         }
     }
+
+
 
     private class FillInitialDbAsync extends AsyncTask<Void, Void, Void>{
         private final UserDao userdao;
