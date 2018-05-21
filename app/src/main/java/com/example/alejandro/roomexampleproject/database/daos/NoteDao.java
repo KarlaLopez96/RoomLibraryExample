@@ -8,20 +8,22 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.example.alejandro.roomexampleproject.models.Note;
+import com.example.alejandro.roomexampleproject.models.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Dao
 public interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Note note);
+    void insert(Note... notes);
 
     @Update
     void update(Note... notes);
 
-    @Delete
-    void delete(Note... notes);
+    @Query("delete FROM Note")
+    void delete();
 
     @Query("SELECT * FROM Note")
     List<Note> getAll();

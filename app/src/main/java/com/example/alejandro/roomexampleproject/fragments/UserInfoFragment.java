@@ -35,8 +35,8 @@ public class UserInfoFragment extends Fragment{
 
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
-        //email.setText(user.getEmail());
-        //address.setText(user.getAddress());
+        email.setText(user.getEmail());
+        address.setText(user.getAddress());
         phone.setText(user.getPhone());
 
         return v;

@@ -1,19 +1,16 @@
 package com.example.alejandro.roomexampleproject.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 
 import com.example.alejandro.roomexampleproject.database.daos.NoteDao;
 import com.example.alejandro.roomexampleproject.database.daos.UserDao;
 import com.example.alejandro.roomexampleproject.models.Note;
 import com.example.alejandro.roomexampleproject.models.User;
 
-@Database(entities = {User.class, Note.class}, version = 1)
+@Database(entities = {User.class, Note.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase{
     private static final String DB_NAME = "notesDatabase.db";
     private static volatile AppDatabase instance;
@@ -22,7 +19,6 @@ public abstract class AppDatabase extends RoomDatabase{
         if (instance == null){
             instance = create(context);
         }
-
         return instance;
     }
 
@@ -31,7 +27,7 @@ public abstract class AppDatabase extends RoomDatabase{
                 context,
                 AppDatabase.class,
                 DB_NAME
-        ).build();
+        ).fallbackToDestructiveMigration().build();
     }
 
     public abstract UserDao userDao();
